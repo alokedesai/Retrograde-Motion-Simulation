@@ -1,26 +1,26 @@
 <html>
 <head>
-	<title>Astro Project</title>
-	<link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Astro Project</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <script type="text/javascript" src="jquery-2.1.4.min.js"></script>
 </head>
 <body>
     <button id="pause">Pause</button>
-	<div id="outer-gear">
-		<div class="outline"></div>
-		<div id="moveMe" class="circle"></div>
-	</div>
+    <div id="outer-gear">
+        <div class="outline"></div>
+        <div id="moveMe" class="circle"></div>
+    </div>
     <div id="inner-circle">
     </div>
 
     <div class="circle small-circle"></div>
 
-	
-	<script type="text/javascript">
-	var ElementRevolver = (function() {
-        
+    
+    <script type="text/javascript">
+    var ElementRevolver = (function() {
+        var ellapsedTime = 0;
         function getEllapsedTime() {
-            return 0;
+            return ellapsedTime;
         }
 
         function getPosition(settings, ellapsedTime) {
@@ -44,9 +44,10 @@
             el.style.position = settings.cssPosition || 'absolute';
             if(!settings.startPositionRad) settings.startPositionRad = settings.startPositionDeg / 180 * Math.PI;
             el['#rev:tm'] = setInterval(function() {
-                var pos = getPosition(settings, (new Date()).getTime() - startTime);
+                ellapsedTime = (new Date()).getTime() - startTime;
+                var pos = getPosition(settings, ellapsedTime);
                 el.style.left = (pos.x - Math.round(width / 2)) + 'px';
-                el.style.top = (pos.y - Math.round(height / 2)) + 'px';
+                el.style.top = (pos.y - Math.round(height / 2)) + 'px';   
 
             }, settings.updateInterval);
             if(settings.iterations > -1) setTimeout(function() {
@@ -120,6 +121,6 @@ $("#pause").click(function() {
     }
     
 });
-	</script>
+    </script>
 </body>
 </html>
