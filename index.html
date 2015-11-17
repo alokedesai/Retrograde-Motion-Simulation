@@ -19,6 +19,7 @@
     <script type="text/javascript">
     var ElementRevolver = (function() {
         var ellapsedTime = 0;
+
         function getEllapsedTime() {
             return ellapsedTime;
         }
@@ -64,12 +65,14 @@
         
         return {
             start: start,
-            stop: stop
+            stop: stop,
+            getEllapsedTime: getEllapsedTime,
+            getAngle: getAngle
         };
         
     })();
 
-ElementRevolver.start('moveMe', {
+var moveMeSettings =  {
     radius: 80,
     center: { x: 150, y: 150 },
     // time in milliseconds for one revolution
@@ -86,10 +89,9 @@ ElementRevolver.start('moveMe', {
     updateInterval: 50,
 
     showLine: true
-});
-
-
-ElementRevolver.start('outer-gear', {
+}
+ 
+var outerGearSettings =  {
     radius: 200,
     center: { x: 1000, y: 200 },
     // time in milliseconds for one revolution
@@ -106,18 +108,30 @@ ElementRevolver.start('outer-gear', {
     updateInterval: 50,
 
     showLine: false
-});
+};
+
+ElementRevolver.start('moveMe', moveMeSettings);
+ElementRevolver.start('outer-gear', outerGearSettings);
 
 var shouldPause = true;
 $("#pause").click(function() {
-
     if (shouldPause) {
         ElementRevolver.stop("outer-gear");
         ElementRevolver.stop("moveMe");    
         shouldPause = false;
-    } else {
-        ElementRevolver.start("outer-gear");
-        ElementRevolver.start("moveMe");
+        
+    } 
+    else {
+        // ellapsedTime = ElementRevolver.getEllapsedTime();
+        // outerGearPosition = ElementRevolver.getAngle(outerGearSettings, ellapsedTime);
+        // moveMePosition = ElementRevolver.getAngle(moveMeSettings, ellapsedTime);
+
+        // outerGearSettings["startPositionDeg"] = outerGearPosition;
+        // moveMeSettings["startPositionDeg"] = moveMePosition;
+        // ElementRevolver.start("moveMe", moveMeSettings);
+        // ElementRevolver.start("outer-gear", outerGearSettings);
+
+        // shouldPause = true;
     }
     
 });
